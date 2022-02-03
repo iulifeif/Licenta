@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import logo from "../../assets/logo.png"
 import { SubmitButton } from "../accountBox/common";
+import { AccountBox } from "../accountBox/index";
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 const FirstPage = styled.div`
     width: 40%;
@@ -34,10 +36,20 @@ const FirstText = styled.h2`
 
 export function HomePage(props) {
     return (
-        <FirstPage>
-            <LogoImg/>
-            <FirstText> Învață mai bine Limba Română! </FirstText>
-            <SubmitButton type="submit">START</SubmitButton>
-        </FirstPage>
+        <Router>
+
+            <FirstPage>
+                <LogoImg />
+                <FirstText> Învață mai bine Limba Română! </FirstText>
+                <SubmitButton type="submit" component={AccountBox}>
+                    <Link to="/login">
+                        START
+                    </Link>
+                </SubmitButton>
+            </FirstPage>
+            {/* <Switch>
+                <Route exact path="/login" component={AccountBox} />
+            </Switch> */}
+        </Router>
     );
 };

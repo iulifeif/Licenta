@@ -4,8 +4,12 @@
 
 from flask import Flask
 
+import settings
 from database_management import build_sqlite_connection_string, init_database_connection
+# from src.endpoints.school import school_bp
+# from src.endpoints.email import email_bp
 from src.endpoints.user import user_bp
+from src.endpoints.login import login_bp
 
 
 def configure_app(application):
@@ -17,6 +21,9 @@ def configure_app(application):
 app = Flask(__name__)
 configure_app(app)
 app.register_blueprint(user_bp)
+app.register_blueprint(login_bp)
+# app.register_blueprint(school_bp)
+# app.register_blueprint(email_bp)
 
 
 @app.route('/status', methods=['GET'])

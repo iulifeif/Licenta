@@ -7,26 +7,26 @@ import { SignupForm } from "./signupForm"
 
 const BoxContainer = styled.div`
     width: 280px;
-    min-height: 550px;
+    height: 600px;
     display: flex;
     flex-direction: column;
-    border-radius: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
+    border-radius: 30px;
+    background: #fff;
+    box-shadow: 2px 2px 92px rgba(15, 15, 15, 0.28);
     position: relative;
     overflow: hidden;
     box-shadow: 5px, 5px, 2.5px rgba(15, 15, 15, 0.19);
-    margin-top: 3%;
+    margin-top: 2%;
+    margin-bottom: 2%;
 `;
 
 const TopContainer = styled.div`
     width: 100%;
-    height: 250px;
+    height: 220px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 1.8em;
-    padding-bottom: 5em;
+    justify-content: space-around;
+    padding: 50px 20px;
     background: #fff;
 `;
 
@@ -38,8 +38,8 @@ const BackDrop = styled(motion.div)`
     flex-direction: column;
     border-radius: 50%;
     transform: rotate(60deg);
-    top: -310px;
-    left: -70px;
+    top: -300px;
+    left: -80px;
     background: rgb(241, 196, 15);
     background: linear-gradient(
         58deg,
@@ -51,12 +51,14 @@ const HeaderContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    background: none;
 `;
 
 const HeaderText = styled.h2`
-    font-size: 30px;
-    font-weight: 600;
-    line-height: 1.24;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.4;
     color: #fff;
     z-index: 10;
     margin: 0;
@@ -66,20 +68,20 @@ const HeaderText = styled.h2`
 const SamllText = styled.h3`
     color: #fff;
     font-weight: 500;
-    font-size:11px;
+    font-size: 12px;
     z-index: 10;
     margin: 0;
-    margin-top: 6px;
+    margin-top: 0px;
     background: none;
 `;
 
 
 const InnerContainer = styled.div`
     width:  100%;
-    height: 70%;
+    height: 90%;
     display:flex;
     flex-direction: column;
-    padding: 0 1.8em;
+    padding: 0px 25px 5px;
     background: #fff;
 `;
 

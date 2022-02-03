@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import { BoxContainer, FormContainer, Input, MutedLink, SubmitButton, BoldLink } from "./common"
-import { Marginer } from "../marginer";
+import { BoxContainer, FormContainer, Input, MutedLink, SubmitButton, BoldLink, BottomForm } from "./common"
 import { AccountContext } from "./accountContext";
 
 export function SignupForm(props) {
@@ -14,15 +13,15 @@ export function SignupForm(props) {
                 <Input type="password" placeholder="Password" />
                 <Input type="password" placeholder="Confirm Password" />
             </FormContainer>
-            <Marginer direction="vertical" margin={10} />
-            <SubmitButton type="submit">Signup</SubmitButton>
-            <Marginer direction="vertical" margin="1.4em" />
-            <MutedLink href="#">
-                Already have an account?
-                <BoldLink href="#" onClick={switchToSignin}>
-                    Signin
-                </BoldLink>
-            </MutedLink>
+            <BottomForm>
+                <SubmitButton type="submit">Signup</SubmitButton>
+                <MutedLink href="#">
+                    Already have an account?
+                    <BoldLink href="#" onClick={switchToSignin}>
+                        Signin
+                    </BoldLink>
+                </MutedLink>
+            </BottomForm>
         </BoxContainer>
     );
 }

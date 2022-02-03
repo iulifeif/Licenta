@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import {AccountBox} from "./components/accountBox";
-// import {HomePage} from "./components/home/index.jsx"
+import { AccountBox } from "./components/accountBox";
+import { HomePage } from "./components/home/index.jsx"
 
-const AppContainer = styled.div`
+const AppContainer = styled.div `
   width: 100%;
   height: 100%;
   display: flex;
@@ -11,12 +11,10 @@ const AppContainer = styled.div`
 `;
 
 function App() {
-  return (
-  <AppContainer>
-    <AccountBox />
-    {/* <HomePage>Inscrie-te!</HomePage> */}
-  </AppContainer>
-  );
-}
+    return ( <AppContainer>
+        <AccountBox/>
+        </AppContainer>
+    );
+};
 
 export default App;

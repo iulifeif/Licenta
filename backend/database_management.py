@@ -17,8 +17,8 @@ def build_sqlite_connection_string(db_file_path):
 def create_dependent_tables(engine):
     from src.models.base import Base
     from src.models.user import User
-    from src.models.company import Company
-    from src.models.user_company import UserCompany
+    # from src.models.school import School
+    # from src.models.user_school import UserSchool
     Base.metadata.create_all(engine)
 
 
