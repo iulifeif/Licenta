@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+
+<div class="container">
+  <form method="POST" class="login-form">
+  <p>Log In</p>
+    {{ form.hidden_tag() }}
+      {{ form.username_or_email.label() }}
+      {{ form.username_or_email(class="input-field", placeholder=form.username_or_email.description) }}
+      {% for error in form.username_or_email.errors %}
+        <p style="color: red">{{ error }}</p>
+      {% endfor %}
+      {{ form.password.label() }}
+      {{ form.password(class="input-field", placeholder=form.password.description) }}
+      {% for error in form.password.errors %}
+        <p style="color: red">{{ error }}</p>
+      {% endfor %}
+    {{ form.submit(class="submit") }}
+  </form>
+  <a class="btn-oauth" href="{{ url_for('users.facebook_oauth') }}">Facebook</a>
+  <a class="btn-oauth" href="{{ url_for('users.google_oauth') }}">Google</a>
+</div>
+
+{% endblock content %}
