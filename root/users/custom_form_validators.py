@@ -1,3 +1,4 @@
+"""users package custom form validators"""
 import re
 
 from flask_login import current_user
@@ -17,10 +18,10 @@ def safe_string():
 
     def validation(form, field):
         string = field.data.lower()
-        pattern = re.compile(r"^[a-z 0-9_-]+$")
+        pattern = re.compile(r"^[a-z0-9_-]+$")
         match = pattern.match(string)
         if not match:
-            message = "Must contain only letters, numbers, dashes, underscores and spaces."
+            message = "Must contain only letters, numbers, dashes and underscores."
             raise ValidationError(message)
 
     return validation

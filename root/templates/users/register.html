@@ -1,58 +1,121 @@
-{% extends "core/base.html" %}
+{% extends "core/base-fullscreen.html" %}
+
+{% block title %} Login {% endblock %}
 
 {% block content %}
 
-<div class="container text-center">
-  <h1>Register</h1>
-  <h3>Sign up through a social platform</h3>
-  <p><a class="btn btn-primary" href="{{ url_for('users.facebook_oauth') }}">Facebook</a></p>
-  <p><a class="btn btn-primary" href="{{ url_for('users.google_oauth') }}">Google</a></p>
-  <br><h5><strong>-- OR --</strong></h5><br>
-  <h3>Create account with username/password</h3>
+<div class="auth-wrapper">
+    <div class="auth-content">
+        <div class="auth-bg">
+            <span class="r"></span>
+            <span class="r s"></span>
+            <span class="r s"></span>
+            <span class="r"></span>
+        </div>
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    <i class="feather icon-user-plus auth-icon"></i>
+                </div>
+                <h3 class="mb-4">Sign up</h3>
 
-  <form method="POST">
-    {{ form.hidden_tag() }}
-    <!-- Email -->
-    <div class="form-group">
-      {{ form.email.label() }}
-      {{ form.email(class="form-control text-center", placeholder=form.email.description) }}
-      {% for error in form.email.errors %}
-        <p style="color: red">{{ error }}</p>
-      {% endfor %}
+                <span class="mb-0 text-muted">
+                        {% if msg %}
+                            {{ msg | safe }}
+                        {% else %}
+                            Add your credentials
+                        {% endif %}
+                    </span>
+
+                <br/>
+                <br/>
+
+
+                <!-- Hide the form on success -->
+                {% if not success %}
+                <form role="form" method="post" action="">
+                    {{ form.hidden_tag() }}
+                    <!-- Firstname -->
+                    <div class="input-group mb-3">
+                        {{ form.firstname(class="form-control text-center", placeholder=form.firstname.description) }}
+                        {% for error in form.firstname.errors %}
+                        <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <!-- Lastname -->
+                    <div class="input-group mb-3">
+                        {{ form.lastname(class="form-control text-center", placeholder=form.lastname.description) }}
+                        {% for error in form.lastname.errors %}
+                        <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <!-- Username -->
+                    <div class="input-group mb-3">
+                        {{ form.username(class="form-control text-center", placeholder=form.username.description) }}
+                        {% for error in form.username.errors %}
+                        <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <!-- Email -->
+                    <div class="input-group mb-3">
+                        {{ form.email(class="form-control text-center", placeholder=form.email.description) }}
+                        {% for error in form.email.errors %}
+                        <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <!-- City -->
+<!--                    <div class="input-group mb-3">-->
+<!--                        {{ form.city(class="form-control text-center", placeholder=form.city.description) }}-->
+<!--                        {% for error in form.city.errors %}-->
+<!--                        <p style="color: red">{{ error }}</p>-->
+<!--                        {% endfor %}-->
+<!--                    </div>-->
+                    <!-- School -->
+<!--                    <div class="input-group mb-3">-->
+<!--                        {{ form.school(class="form-control text-center", placeholder=form.school.description) }}-->
+<!--                        {% for error in form.school.errors %}-->
+<!--                        <p style="color: red">{{ error }}</p>-->
+<!--                        {% endfor %}-->
+<!--                    </div>-->
+                    <!-- Age -->
+<!--                    <div class="input-group mb-3">-->
+<!--                        {{ form.age(class="form-control text-center", placeholder=form.age.description) }}-->
+<!--                        {% for error in form.age.errors %}-->
+<!--                        <p style="color: red">{{ error }}</p>-->
+<!--                        {% endfor %}-->
+<!--                    </div>-->
+                    <!-- Password -->
+                    <div class="input-group mb-4">
+                        {{ form.password(class="form-control text-center", placeholder=form.password.description,
+                        type="password") }}
+                        {% for error in form.password.errors %}
+                        <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="input-group mb-4">
+                        {{ form.pass_confirm(class="form-control text-center",
+                        placeholder=form.pass_confirm.description) }}
+                        {% for error in form.pass_confirm.errors %}
+                        <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="form-group text-left">
+                        <div class="checkbox checkbox-fill d-inline">
+                            <input type="checkbox" name="checkbox-fill-1" id="checkbox-fill-a1" checked="">
+                            <label for="checkbox-fill-a1" class="cr"> Agree with <a href="#">terms</a></label>
+                        </div>
+                    </div>
+                    {{ form.submit(class="btn btn-lg btn-primary") }}
+                </form>
+                <p><a class="btn btn-primary" href="{{ url_for('users.facebook_oauth') }}">Facebook</a></p>
+                <p><a class="btn btn-primary" href="{{ url_for('users.google_oauth') }}">Google</a></p>
+                <p class="mb-0 text-muted">Already have an account? <a
+                        href="{{ url_for('users.login') }}">Login Here!</a></p>
+                <br/>
+                {% endif %}
+            </div>
+        </div>
     </div>
-    <!-- Username -->
-    <div class="form-group">
-      {{ form.username.label() }}
-      {{ form.username(class="form-control text-center", placeholder=form.username.description) }}
-      {% for error in form.username.errors %}
-        <p style="color: red">{{ error }}</p>
-      {% endfor %}
-    </div>
-    <!-- Name -->
-    <div class="form-group">
-      {{ form.name.label() }}
-      {{ form.name(class="form-control text-center", placeholder=form.name.description) }}
-      {% for error in form.name.errors %}
-        <p style="color: red">{{ error }}</p>
-      {% endfor %}
-    </div>
-    <!-- Password -->
-    <div class="form-group">
-      {{ form.password.label() }}
-      {{ form.password(class="form-control text-center", placeholder=form.password.description) }}
-      {% for error in form.password.errors %}
-        <p style="color: red">{{ error }}</p>
-      {% endfor %}
-    </div>
-    <div class="form-group">
-      {{ form.pass_confirm.label() }}
-      {{ form.pass_confirm(class="form-control text-center", placeholder=form.pass_confirm.description) }}
-      {% for error in form.pass_confirm.errors %}
-        <p style="color: red">{{ error }}</p>
-      {% endfor %}
-    </div>
-    {{ form.submit(class="btn btn-lg btn-primary") }}
-  </form>
 </div>
 
 {% endblock content %}

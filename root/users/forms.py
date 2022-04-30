@@ -7,15 +7,15 @@ from root.users.custom_form_validators import safe_string, unique_or_current_use
 
 class RegistrationForm(FlaskForm):
     """Register a new user with email, username, and password"""
-
-    email = StringField(
-        "Email",
-        description="my@email.com",
-        validators=[
-            DataRequired(),
-            Email(),
-            unique_or_current_user_field("Email is already registered."),
-        ],
+    firstname = StringField(
+        "John",
+        description="John",
+        validators=[Length(min=4, max=80)],
+    )
+    lastname = StringField(
+        "Deep",
+        description="Deep",
+        validators=[Length(min=1, max=80)],
     )
     username = StringField(
         "Username",
@@ -27,10 +27,26 @@ class RegistrationForm(FlaskForm):
             Length(min=3, max=40),
         ],
     )
-    name = StringField(
-        "John Doe",
-        description="John Doe",
-        validators=[DataRequired(), Length(min=1, max=80)],
+    email = StringField(
+        "Email",
+        description="my@email.com",
+        validators=[
+            DataRequired(),
+            Email(),
+            unique_or_current_user_field("Email is already registered."),
+        ],
+    )
+    city = StringField(
+        "City",
+        description="Iasi",
+    )
+    school = StringField(
+        "School",
+        description="Scoala Generala nr.6",
+    )
+    age = StringField(
+        "Age",
+        description="9 ani",
     )
     password = PasswordField(
         "Password",
@@ -64,9 +80,11 @@ class LoginForm(FlaskForm):
 
 class SettingsForm(FlaskForm):
     """Allow users to update their name, username, email, and password"""
-
-    name = StringField(
-        "Name", description="John Smith", validators=[Optional(), Length(max=80)],
+    firstname = StringField(
+        "Firstname", description="John", validators=[Optional(), Length(max=80)],
+    )
+    lastname = StringField(
+        "Name", description="Smith", validators=[Optional(), Length(max=80)],
     )
     username = StringField(
         "Username",
@@ -87,6 +105,15 @@ class SettingsForm(FlaskForm):
             unique_or_current_user_field("Email is already registered."),
         ],
     )
+    city = StringField(
+        "City", description="Iasi", validators=[Optional(), Length(max=80)],
+    )
+    school = StringField(
+        "School", description="Scoala Generala nr.6", validators=[Optional(), Length(max=80)],
+    )
+    age = StringField(
+        "Age", description="11", validators=[Optional(), Length(max=80)],
+    )
     new_pass = PasswordField(
         "New Password",
         description="New password",
@@ -98,3 +125,20 @@ class SettingsForm(FlaskForm):
         validators=[Optional(), EqualTo("new_pass", message="Passwords Must Match!")],
     )
     submit = SubmitField("Update")
+
+
+class QuizForm(FlaskForm):
+    """Handle the questions for the quiz"""
+    question = StringField(
+        "Question tralala", description="Question", validators=[Optional(), Length(max=80)],
+    )
+    option1 = StringField(
+        "Option1", description="Option1", validators=[Optional(), Length(max=80)],
+    )
+    option2 = StringField(
+        "Option2", description="Option2", validators=[Optional(), Length(max=80)],
+    )
+    option3 = StringField(
+        "Option3", description="Option3", validators=[Optional(), Length(max=80)],
+    )
+    submit = SubmitField("Next")

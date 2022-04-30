@@ -1,3 +1,5 @@
+import random
+
 from authomatic.adapters import WerkzeugAdapter
 from flask import (
     Blueprint,
@@ -6,13 +8,14 @@ from flask import (
     redirect,
     render_template,
     request,
-    url_for,
-)
+    url_for, )
 from flask_login import current_user, login_required, login_user, logout_user
+from jinja2 import TemplateNotFound
+from werkzeug.debug import console
 from werkzeug.security import generate_password_hash
 
-from root.users.forms import LoginForm, RegistrationForm, SettingsForm
-from root.users.models import User
+from root.users.forms import LoginForm, RegistrationForm, SettingsForm, QuizForm
+from root.users.models import User, Questions
 from root.users.oauth_config import authomatic
 
 users = Blueprint("users", __name__)
@@ -26,15 +29,19 @@ def register():
     if form.validate_on_submit():
         password_hash = generate_password_hash(form.password.data)
         user = User(
-            email = form.email.data,
-            username = form.username.data,
-            name = form.name.data,
-            password_hash = password_hash,
+            firstname=form.firstname.data,
+            lastname=form.lastname.data,
+            username=form.username.data,
+            email=form.email.data,
+            city=form.city.data,
+            school=form.school.data,
+            age=form.age.data,
+            password_hash=password_hash,
         )
         user.save()
         flash("Thanks for registering!", category="success")
         return login_and_redirect(user)
-    return render_template("users/register.html", form=form)
+    return render_template("users/register.html", form=form), 200
 
 
 @users.route("/login", methods=["GET", "POST"])
@@ -55,10 +62,9 @@ def login():
             return login_and_redirect(user)
         else:
             flash(
-                "Email sau parola gresite!", category="error"
+                "(email or username)/password combination not found", category="error"
             )
-
-    return render_template("users/login.html", form=form)
+    return render_template("users/login.html", form=form), 200
 
 
 @users.route("/logout")
@@ -66,7 +72,7 @@ def login():
 def logout():
     """Log out the current user"""
     logout_user()
-    flash("Te-ai delogat cu success.", category="success")
+    flash("You have logged out.", category="success")
     return redirect(url_for("users.login"))
 
 
@@ -76,9 +82,13 @@ def settings():
     """Update user settings"""
     form = SettingsForm()
     if form.validate_on_submit():
+        current_user.firstname = form.firstname.data
+        current_user.lastname = form.lastname.data
         current_user.username = form.username.data
-        current_user.name = form.name.data
         current_user.email = form.email.data
+        current_user.city = form.city.data
+        current_user.school = form.school.data
+        current_user.age = form.age.data
         if form.new_pass.data:
             new_hash = generate_password_hash(form.new_pass.data)
             current_user.password_hash = new_hash
@@ -86,20 +96,113 @@ def settings():
         flash("User Account Updated", category="success")
         return redirect(url_for("core.index"))
     elif request.method == "GET":
+        form.firstname.data = current_user.firstname
+        form.lastname.data = current_user.lastname
         form.username.data = current_user.username
-        form.name.data = current_user.name
         form.email.data = current_user.email
+        form.city.data = current_user.city
+        form.school.data = current_user.school
+        form.age.data = current_user.age
 
     return render_template(
         "users/settings.html", form=form, can_disconnect=can_oauth_disconnect()
     )
 
 
-@users.route("/maps", methods=["GET"])
+@users.route("/quiz")
+@login_required
+def quiz():
+    form = QuizForm()
+    used_questions = []
+    score = current_user.score
+    question_number = 0
+    while True:
+        if form.validate_on_submit():
+            right_answer = form.choosed_answer.data
+            question = Questions.objects(number=question_number)
+            if question.answer == right_answer:
+                score += 5
+        elif request.method == "GET":
+            if score < 30:
+                difficulty_nivel = "low"
+            elif 30 <= score < 60:
+                difficulty_nivel = "medium"
+            else:
+                difficulty_nivel = "high"
+            #     take all the possible questions with wanted difficulty
+            possible_questions = Questions.objects(difficulty=difficulty_nivel)
+            # take all ids for those questions
+            questions_id = [question.number for question in possible_questions]
+            question_number = random.choice(questions_id)
+            tries = 0
+            # search for a questions who wasn't asked
+            while question_number in used_questions and tries <= 3:
+                question_number = random.choice(questions_id)
+                tries += 1
+            if tries == 3:
+                current_user.score = score
+                return
+            next_question = Questions.objects(number__gt=2)
+            print("question number: ", question_number)
+            for q in Questions.objects:
+                if q.number == question_number:
+                    print(q.question)
+                    form.question.data = q.question
+                    form.option1.data = q.options[0]
+                    form.option2.data = q.options[1]
+                    form.option3.data = q.options[2]
+            used_questions.append(question_number)
+        return render_template(
+            "users/quiz.html", form=form
+        )
+    # questions = Questions.objects(difficulty="low").first()
+    # return jsonify(questions.number), 200
+
+
+@users.route("/map")
+@login_required
 def maps():
-    """Show the map with the details about the user"""
-    flash("Bine ai venit in harta!", category="success")
-    return render_template("users/maps.html")
+    flash("You opened the map.", category="success")
+    return render_template(
+        "users/map.html", can_disconnect=can_oauth_disconnect()
+    )
+
+
+@users.route('/<template>')
+@login_required
+def route_template(template):
+    print("1")
+    try:
+        if not template.endswith('.html'):
+            template += '.html'
+        print("2")
+        # Detect the current page
+        segment = get_segment(request)
+        # Serve the file (if exists) from app/templates/home/FILE.html
+        return render_template("home/" + template)
+        print("3")
+    except TemplateNotFound:
+        print("4")
+        return render_template("home/page-404.html"), 404
+
+    except:
+        print("5")
+        return render_template("home/page-500.html"), 500
+
+
+# Helper - Extract current page name from request
+def get_segment(request):
+    try:
+
+        segment = request.path.split('/')[-1]
+        print("6")
+        if segment == '':
+            segment = '/index'
+        print("7")
+        return segment
+    except:
+        print("8")
+        return None
 
 
 @users.route("/delete_account")
@@ -158,7 +261,7 @@ def oauth_disconnect(oauth_client):
     current_user[db_oauth_key] = None
     current_user.save()
 
-    flash(f"Deconectat de la {oauth_client}!")
+    flash(f"Disconnected from {oauth_client}!")
     return redirect(url_for("users.settings"))
 
 
@@ -210,6 +313,7 @@ def oauth_generalized(oauth_client):
     if not user:
         # Generate a unique username from client's name found in OAuth lookup
         base_username = client_name.lower().split()[0]
+        print(base_username)
         username = base_username
         attempts = 0
         while True:
@@ -222,7 +326,7 @@ def oauth_generalized(oauth_client):
         # Create user and save to database
         user_data = {
             "username": username,
-            "name": client_name,
+            "firstname": client_name,
             db_oauth_key: client_oauth_id,
         }
         user = User(**user_data)

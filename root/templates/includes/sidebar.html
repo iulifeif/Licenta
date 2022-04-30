@@ -1,0 +1,119 @@
+<nav class="pcoded-navbar">
+    <div class="navbar-wrapper">
+        <div class="navbar-brand header-logo">
+            <a target="_blank" class="b-brand">
+                <div class="b-bg">
+                    <i class="feather icon-trending-up"></i>
+                </div>
+                <span class="b-title">eLearning</span>
+            </a>
+            <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
+        </div>
+        <div class="navbar-content scroll-div">
+            <ul class="nav pcoded-inner-navbar">
+                <li class="nav-item pcoded-menu-caption">
+                    <label>Navigation</label>
+                </li>
+                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project"
+                    class="nav-item {% if 'index' in segment %} active {% endif %}">
+                    <a href="/" class="nav-link "><span class="pcoded-micon"><i
+                            class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+                </li>
+                <li class="nav-item pcoded-menu-caption">
+                    <label>UI Elementd</label>
+                </li>
+<!--                COMPONENTS-->
+                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds"
+                    class="nav-item pcoded-hasmenu">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span
+                            class="pcoded-mtext">Components</span></a>
+                    <ul class="pcoded-submenu">
+                        <li class=""><a href="users/ui-button.html" class="">Button</a></li>
+                        <li class=""><a href="users/ui-badges.html" class="">Badges</a></li>
+                        <li class=""><a href="users/ui-breadcrumb-pagination.html" class="">Breadcrumb & paggination</a></li>
+                        <li class=""><a href="users/ui-collapse.html" class="">Collapse</a></li>
+                        <li class=""><a href="users/ui-tabs.html" class="">Tabs & pills</a></li>
+                        <li class=""><a href="users/ui-typography.html" class="">Typography</a></li>
+                        <li class=""><a href="users/ui-icons.html" class="">Feather<span
+                                class="pcoded-badge label label-danger">NEW</span></a></li>
+                    </ul>
+                </li>
+                <li class="nav-item pcoded-menu-caption">
+                    <label>Forms & table</label>
+                </li>
+<!--                FORMS -->
+                <li data-username="form elements advance componant validation masking wizard picker select"
+                    class="nav-item {% if 'ui-forms' in segment %} active {% endif %}">
+                    <a href="users/ui-forms.html" class="nav-link "><span class="pcoded-micon"><i
+                            class="feather icon-file-text"></i></span><span
+                            class="pcoded-mtext">Form elements</span></a>
+                </li>
+<!--                TABLE-->
+                <li data-username="Table bootstrap datatable footable"
+                    class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
+                    <a href="users/ui-tables.html" class="nav-link "><span class="pcoded-micon"><i
+                            class="feather icon-server"></i></span><span class="pcoded-mtext">Table</span></a>
+                </li>
+<!--                CHART AND MAPS-->
+                <li class="nav-item pcoded-menu-caption">
+                    <label>Chart & Maps</label>
+                </li>
+                <li data-username="Charts Morris"
+                    class="nav-item {% if 'charts-morris' in segment %} active {% endif %}">
+                    <a href="users/charts-morris.html" class="nav-link "><span class="pcoded-micon"><i
+                            class="feather icon-pie-chart"></i></span><span class="pcoded-mtext">Chart</span></a></li>
+                <li data-username="Settings"
+                    class="nav-item {% if 'settings' in segment %} active {% endif %}">
+                    <a href="users/settings" class="nav-link "><span class="pcoded-micon"><i
+                            class="feather icon-pie-chart"></i></span><span class="pcoded-mtext">Settings</span></a></li>
+                <li data-username="Game"
+                    class="nav-item {% if 'settings' in segment %} active {% endif %}">
+                    <a href="users/quiz" class="nav-link "><span class="pcoded-micon"><i
+                            class="feather icon-pie-chart"></i></span><span class="pcoded-mtext">Game</span></a></li>
+                <li data-username="Maps Google"
+                    class="nav-item {% if 'maps-google' in segment %} active {% endif %}">
+                    <a href="users/maps-google.html" class="nav-link "><span class="pcoded-micon"><i
+                            class="feather icon-map"></i></span><span class="pcoded-mtext">Maps</span></a></li>
+                <li class="nav-item pcoded-menu-caption">
+                    <label>Pages</label>
+                </li>
+<!--                AUTH-->
+                <li data-username="Authentication Sign up Sign in reset password Change password Personal information profile settings map form subscribe"
+                    class="nav-item pcoded-hasmenu">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span
+                            class="pcoded-mtext">Authentication</span></a>
+                    <ul class="pcoded-submenu">
+                        <li class=""><a href="/users/login.html" class="">Login (template)</a></li>
+                        <li class=""><a href="/users/register.html" class="">Register (template)</a></li>
+                    </ul>
+                </li>
+                <li data-username="Sample Page"
+                    class="nav-item {% if 'page-blank' in segment %} active {% endif %}">
+                    <a href="users/page-blank.html" class="nav-link"><span class="pcoded-micon"><i
+                            class="feather icon-sidebar"></i></span><span class="pcoded-mtext">Sample page</span></a>
+                </li>
+                <li data-username="Sample Page" class="nav-item"><a href="users/page-404.html" class="nav-link"><span
+                        class="pcoded-micon"><i class="feather icon-sidebar"></i></span><span class="pcoded-mtext">Error 404</span></a>
+                </li>
+                <!--                    LOGOUT-->
+                <li data-username="Disabled Menu" class="nav-item">
+                    <a href="{{ url_for('users.logout') }}" class="nav-link">
+                        <span class="pcoded-micon"><i class="feather icon-power"></i></span><span class="pcoded-mtext">Logout</span>
+                    </a>
+                </li>
+                <!--                   RESOURCES -->
+                <li class="nav-item pcoded-menu-caption">
+                    <label>More Resources</label>
+                </li>
+                <li data-username="Support Page" class="nav-item ">
+                    <a target="_blank" class="nav-link">
+                            <span class="pcoded-micon">
+                                <i class="feather icon-headphones"></i>
+                            </span>
+                        <span class="pcoded-mtext">Support</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
